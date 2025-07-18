@@ -119,4 +119,41 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="PostBuild_CopyVsix" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <!-- Read version from AssemblyInfo or project -->
+    <PropertyGroup>
+      <VersionNumber>$(Version)</VersionNumber>
+      <VersionedFileName>$(AssemblyName).$(VersionNumber).vsix</VersionedFileName>
+      <PublishDir>$(MSBuildProjectDirectory)\..\Releases</PublishDir>
+      <BuiltVsixPath>$(OutputPath)$(AssemblyName).vsix</BuiltVsixPath>
+      <TargetVsixPath>$(PublishDir)\$(VersionedFileName)</TargetVsixPath>
+    </PropertyGroup>
+  
+    <!-- Create folder if it doesn't exist -->
+    <MakeDir Directories="$(PublishDir)" />
+  
+    <!-- Copy and rename the .vsix -->
+    <Copy SourceFiles="$(BuiltVsixPath)"
+          DestinationFiles="$(TargetVsixPath)" />
+  </Target>
+  <UsingTask TaskName="XmlPoke" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" />
+
+  <Target Name="PostBuild_CopyVsix" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <PropertyGroup>
+      <VersionNumber>$(Version)</VersionNumber>
+      <VersionedFileName>$(AssemblyName).$(VersionNumber).vsix</VersionedFileName>
+      <PublishDir>$(MSBuildProjectDirectory)\..\Releases</PublishDir>
+      <BuiltVsixPath>$(OutputPath)$(AssemblyName).vsix</BuiltVsixPath>
+      <TargetVsixPath>$(PublishDir)\$(VersionedFileName)</TargetVsixPath>
+    </PropertyGroup>
+  
+    <Message Text="Creating Releases folder at: $(PublishDir)" Importance="high" />
+    <MakeDir Directories="$(PublishDir)" />
+  
+    <Message Text="Copying VSIX to: $(TargetVsixPath)" Importance="high" />
+    <Copy SourceFiles="$(BuiltVsixPath)"
+          DestinationFiles="$(TargetVsixPath)" />
+  </Target>
+  
+
 </Project>
