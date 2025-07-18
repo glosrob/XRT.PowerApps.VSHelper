@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/XRT.PowerApps.VSHelper/.vs
+/XRT.PowerApps.VSHelper/bin
+/XRT.PowerApps.VSHelper/obj
+/XRT.PowerApps.VSHelper/XRT.PowerApps.VSHelper.v3.ncrunchsolution.user
