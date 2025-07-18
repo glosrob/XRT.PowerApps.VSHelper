@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+
+  <Commands package="guidXRTPowerAppsVSHelperPackage">
+    <Groups>
+      <!-- Group for file context commands -->
+      <Group guid="guidXRTPowerAppsVSHelperPackageCmdSet" id="PowerAppsVSHelperFiles" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
+      </Group>
+
+      <!-- Group for solution context commands -->
+      <Group guid="guidXRTPowerAppsVSHelperPackageCmdSet" id="PowerAppsVSHelperFolders" priority="0x0601">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE" />
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <!-- Publish command (files only) -->
+      <Button guid="guidXRTPowerAppsVSHelperPackageCmdSet" id="PublishCommandId" priority="0x0100" type="Button">
+        <Parent guid="guidXRTPowerAppsVSHelperPackageCmdSet" id="PowerAppsVSHelperFiles" />
+        <Icon guid="guidImages" id="bmpPic3" />
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Publish to PowerApps</ButtonText>
+        </Strings>
+      </Button>
+
+      <!-- Retrieve command (files only) -->
+      <Button guid="guidXRTPowerAppsVSHelperPackageCmdSet" id="RetrieveCommandId" priority="0x0101" type="Button">
+        <Parent guid="guidXRTPowerAppsVSHelperPackageCmdSet" id="PowerAppsVSHelperFiles" />
+        <Icon guid="guidImages" id="bmpPic4" />
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Retrieve from PowerApps</ButtonText>
+        </Strings>
+      </Button>
+
+      <!-- RetrieveAll command (solution only) -->
+      <Button guid="guidXRTPowerAppsVSHelperPackageCmdSet" id="RetrieveAllCommandId" priority="0x0102" type="Button">
+        <Parent guid="guidXRTPowerAppsVSHelperPackageCmdSet" id="PowerAppsVSHelperFolders" />
+        <Icon guid="guidImages" id="bmpPic4" />
+        <Strings>
+          <ButtonText>Retrieve All</ButtonText>
+        </Strings>
+      </Button>
+
+      <!-- Config command (solution only) -->
+      <Button guid="guidXRTPowerAppsVSHelperPackageCmdSet" id="ConfigCommandId" priority="0x0103" type="Button">
+        <Parent guid="guidXRTPowerAppsVSHelperPackageCmdSet" id="PowerAppsVSHelperFolders" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Configure PowerApps Settings</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+
+    <Bitmaps>
+      <Bitmap guid="guidImages" href="Resources\All.png" usedList="bmpPic1, bmpPic2, bmpPic3, bmpPic4" />
+    </Bitmaps>
+
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="guidXRTPowerAppsVSHelperPackage" value="{a08fcead-88d0-4e5a-a447-4a3f1e895d07}" />
+    <GuidSymbol name="guidXRTPowerAppsVSHelperPackageCmdSet" value="{572f9943-8f11-4457-83cc-7cc01a0ce26f}">
+      <IDSymbol name="PowerAppsVSHelperFiles" value="0x1020" />
+      <IDSymbol name="PowerAppsVSHelperFolders" value="0x1021" />
+      <IDSymbol name="PublishCommandId" value="0x0100" />
+      <IDSymbol name="RetrieveCommandId" value="0x0101" />
+      <IDSymbol name="RetrieveAllCommandId" value="0x0102" />
+      <IDSymbol name="ConfigCommandId" value="0x0103" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidImages" value="{cd258417-f655-4d24-b0a6-32de1cdc23c4}">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPic3" value="3" />
+      <IDSymbol name="bmpPic4" value="4" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
