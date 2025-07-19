@@ -24,10 +24,6 @@ namespace XRT.PowerApps.VSHelper
             private set;
         }
 
-        #pragma warning disable IDE0052 // Remove unread private members
-        private readonly AsyncPackage package;
-        #pragma warning restore IDE0052 // Remove unread private members
-        
         // Methods
 
         /// <summary>
@@ -41,12 +37,11 @@ namespace XRT.PowerApps.VSHelper
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new ConfigCommand(package, commandService);
+            Instance = new ConfigCommand(commandService);
         }
 
-        private ConfigCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private ConfigCommand(OleMenuCommandService commandService)
         {
-            this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
             var menuCommandID = new CommandID(Refs.CommandSet, Refs.ConfigCommandId);
