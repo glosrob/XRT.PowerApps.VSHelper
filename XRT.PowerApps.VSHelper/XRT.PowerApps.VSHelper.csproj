@@ -4,7 +4,9 @@
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -27,6 +29,7 @@
     <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
     <StartArguments>/rootsuffix Exp</StartArguments>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -37,6 +40,7 @@
     <WarningLevel>4</WarningLevel>
     <CopyVsixExtensionFiles>False</CopyVsixExtensionFiles>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -45,6 +49,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="ConfigCommand.cs" />
     <Compile Include="Controllers\CommandController.cs" />
@@ -69,11 +74,13 @@
     <Compile Include="RetrieveCommand.cs" />
     <Compile Include="XRT.PowerApps.VSHelperPackage.cs" />
   </ItemGroup>
+
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -83,26 +90,26 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies">
-      <Version>9.0.2.56</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CrmSdk.XrmTooling.CoreAssembly">
-      <Version>9.1.1.65</Version>
-    </PackageReference>
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.56" />
+    <PackageReference Include="Microsoft.CrmSdk.XrmTooling.CoreAssembly" Version="9.1.1.65" />
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.32112.339" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.9.3184" />
   </ItemGroup>
+
   <ItemGroup>
     <VSCTCompile Include="XRTPowerAppsVSHelperPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
   </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="Dialogs\Config.resx">
       <DependentUpon>Config.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+
   <ItemGroup>
     <Content Include="Resources\All.png" />
     <Content Include="Resources\ConfigCommand.png" />
@@ -110,50 +117,26 @@
     <Content Include="Resources\RetrieveCommand.png" />
     <Content Include="Resources\RetrieveAllCommand.png" />
   </ItemGroup>
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <Target Name="PostBuild_CopyVsix" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
-    <!-- Read version from AssemblyInfo or project -->
-    <PropertyGroup>
-      <VersionNumber>$(Version)</VersionNumber>
-      <VersionedFileName>$(AssemblyName).$(VersionNumber).vsix</VersionedFileName>
-      <PublishDir>$(MSBuildProjectDirectory)\..\Releases</PublishDir>
-      <BuiltVsixPath>$(OutputPath)$(AssemblyName).vsix</BuiltVsixPath>
-      <TargetVsixPath>$(PublishDir)\$(VersionedFileName)</TargetVsixPath>
-    </PropertyGroup>
-  
-    <!-- Create folder if it doesn't exist -->
-    <MakeDir Directories="$(PublishDir)" />
-  
-    <!-- Copy and rename the .vsix -->
-    <Copy SourceFiles="$(BuiltVsixPath)"
-          DestinationFiles="$(TargetVsixPath)" />
-  </Target>
-  <UsingTask TaskName="XmlPoke" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" />
 
+  <UsingTask TaskName="XmlPeek" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" />
+
+  <!-- tasks for copying VSIX to Releases folder -->
   <Target Name="PostBuild_CopyVsix" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="CurrentAssembly" />
+    </GetAssemblyIdentity>
     <PropertyGroup>
-      <VersionNumber>$(Version)</VersionNumber>
-      <VersionedFileName>$(AssemblyName).$(VersionNumber).vsix</VersionedFileName>
+      <VersionedFileName>$(AssemblyName).%(CurrentAssembly.Version).vsix</VersionedFileName>
       <PublishDir>$(MSBuildProjectDirectory)\..\Releases</PublishDir>
       <BuiltVsixPath>$(OutputPath)$(AssemblyName).vsix</BuiltVsixPath>
       <TargetVsixPath>$(PublishDir)\$(VersionedFileName)</TargetVsixPath>
     </PropertyGroup>
-  
     <Message Text="Creating Releases folder at: $(PublishDir)" Importance="high" />
     <MakeDir Directories="$(PublishDir)" />
-  
     <Message Text="Copying VSIX to: $(TargetVsixPath)" Importance="high" />
-    <Copy SourceFiles="$(BuiltVsixPath)"
-          DestinationFiles="$(TargetVsixPath)" />
+    <Copy SourceFiles="$(BuiltVsixPath)" DestinationFiles="$(TargetVsixPath)" />
   </Target>
-  
-
 </Project>

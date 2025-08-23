@@ -84,12 +84,14 @@ namespace XRT.PowerApps.VSHelper.Dialogs
             radSolutions.Checked = conn.FilterBySolutions;
             radPublisher.Checked = !conn.FilterBySolutions;
             chkIncludeSolutions.Checked = conn.IncludeSolutions;
+            chkAllowNew.Checked = conn.AllowCreate;
         }
 
         private PowerAppsVSHelperConfig GetConfig()
         {
             return new PowerAppsVSHelperConfig
             {
+                AllowCreate = chkAllowNew.Checked,
                 ClientId = txtClientId.Text,
                 ClientSecret = txtClientSecret.Text,
                 EnvironmentUrl = txtURL.Text,

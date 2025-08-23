@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="XRT.PowerApps.VSHelper.0cfed239-cb6c-429b-8a01-ca1ab0ec4f52" Version="1.0" Language="en-US" Publisher="Robert Tilling" />
+        <Identity Id="XRT.PowerApps.VSHelper.0cfed239-cb6c-429b-8a01-ca1ab0ec4f52" Version="1.1" Language="en-US" Publisher="Robert Tilling" />
         <DisplayName>PowerApps VS Helper</DisplayName>
         <Description xml:space="preserve">Helper for publishing and retrieving PowerApps web resources.</Description>
         <MoreInfo>https://github.com/glosrob/XRT.PowerApps.VSHelper/</MoreInfo>
