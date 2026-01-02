@@ -105,8 +105,8 @@ namespace XRT.PowerApps.VSHelper.Dialogs
         private void SetExamplePath()
         {
             lblExamplePathDetail.Text = chkIncludeSolutions.Checked
-                ? $"{txtRoot.Text}\\"
-                : $"{txtRoot.Text}\\Solution Name\\";
+                ? $"{txtRoot.Text}\\Solution Name\\" :
+                $"{txtRoot.Text}\\";
         }
     }
 }
