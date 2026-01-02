@@ -71,10 +71,15 @@ namespace XRT.PowerApps.VSHelper.Controllers
 
         internal void SaveConnection(PowerAppsVSHelperConfig conn)
         {
+            // Save credentials to Windows Credential Manager
+            var credentialHelper = new CredentialHelper();
+            credentialHelper.SaveCredentials(conn.EnvironmentUrl, conn.ClientId, conn.ClientSecret);
+
+            // Save non-sensitive config to JSON (ClientId and ClientSecret will be excluded due to [JsonIgnore])
             var jsonFile = JsonSerializer.Serialize(conn);
             File.WriteAllText(Path.Combine(SolutionPath, "powerapps-vs-helper-config.json"), jsonFile);
 
-            View.ShowInfoMessage("Configuration saved.");
+            View.ShowInfoMessage("Configuration saved securely to Windows Credential Manager.");
         }
 
         internal void OpenSourceRoot(string pathToOpen)

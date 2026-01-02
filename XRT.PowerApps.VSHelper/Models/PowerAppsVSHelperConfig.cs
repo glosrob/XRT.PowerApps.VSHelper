@@ -9,10 +9,11 @@ namespace XRT.PowerApps.VSHelper.Models
         [JsonInclude]
         internal string Root { get; set; }
 
-        [JsonInclude]
+        // ClientId and ClientSecret are stored in Windows Credential Manager, not in JSON
+        [JsonIgnore]
         internal string ClientId { get; set; }
 
-        [JsonInclude]
+        [JsonIgnore]
         internal string ClientSecret { get; set; }
 
         [JsonInclude]

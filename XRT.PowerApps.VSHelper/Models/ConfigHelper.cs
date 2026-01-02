@@ -33,8 +33,19 @@ namespace XRT.PowerApps.VSHelper.Models
             {
                 return null;
             }
-            var conn = JsonSerializer.Deserialize<PowerAppsVSHelperConfig>(File.ReadAllText(path));
-            return conn;
+
+            var config = JsonSerializer.Deserialize<PowerAppsVSHelperConfig>(File.ReadAllText(path));
+
+            // Load credentials from Windows Credential Manager
+            if (config != null && !string.IsNullOrWhiteSpace(config.EnvironmentUrl))
+            {
+                var credentialHelper = new CredentialHelper();
+                var (clientId, clientSecret) = credentialHelper.LoadCredentials(config.EnvironmentUrl);
+                config.ClientId = clientId;
+                config.ClientSecret = clientSecret;
+            }
+
+            return config;
         }
     }
 }
